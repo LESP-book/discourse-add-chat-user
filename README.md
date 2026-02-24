@@ -1,0 +1,1 @@
+# discourse-add-chat-user
