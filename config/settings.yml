@@ -1,0 +1,7 @@
+plugins:
+  add_chat_user_enabled:
+    default: false
+    client: true
+  add_chat_user_supervisor_username:
+    default: ""
+    type: string
