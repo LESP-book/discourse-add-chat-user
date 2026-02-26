@@ -1,0 +1,5 @@
+zh_CN:
+  site_settings:
+    add_chat_user_enabled: "启用 discourse-add-chat-user 插件（自动将监督用户注入到直接消息中）。"
+    add_chat_user_supervisor_username: "自动添加到每个直接消息中的监督用户的用户名。"
+    add_chat_user_restrict_dm_to_staff: "限制非管理员用户只能与管理员创建直接消息。"

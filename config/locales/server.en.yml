@@ -1,0 +1,5 @@
+en:
+  site_settings:
+    add_chat_user_enabled: "Enable the discourse-add-chat-user plugin (supervisor injection into DMs)."
+    add_chat_user_supervisor_username: "Username of the supervisor to automatically add to every direct message."
+    add_chat_user_restrict_dm_to_staff: "Restrict non-staff users to only create direct messages with staff members."

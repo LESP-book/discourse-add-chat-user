@@ -41,6 +41,10 @@ after_initialize do
       User.where(username: username).pick(:id)
     end
 
+    def self.restrict_dm_to_staff?
+      SiteSetting.add_chat_user_restrict_dm_to_staff
+    end
+
     # Core logic: add supervisor to a DM channel
     def self.add_supervisor_to_channel(channel)
       return unless enabled?
@@ -92,6 +96,25 @@ after_initialize do
       Rails.logger.info(
         "[#{PLUGIN_NAME}] Added supervisor '#{supervisor.username}' to channel ##{channel.id}"
       )
+    end
+  end
+
+  # ──────────────────────────────────────────────────────────────
+  # Hook 0: Restrict non-staff users to only DM staff members
+  # Uses the official modifier extension point in
+  # Chat::CreateDirectMessageChannel#can_create_direct_message
+  #
+  # When enabled, non-staff users can only create DMs with users
+  # who have admin or moderator roles. Staff users are unrestricted.
+  # ──────────────────────────────────────────────────────────────
+  register_modifier(:chat_can_create_direct_message_channel) do |actor_user, target_users|
+    if ::DiscourseAddChatUser.restrict_dm_to_staff? && !actor_user.staff?
+      # Exclude the actor themselves from the staff check —
+      # target_users includes the actor (added by the service).
+      other_targets = target_users.reject { |u| u.id == actor_user.id }
+      other_targets.all?(&:staff?)
+    else
+      true
     end
   end
 

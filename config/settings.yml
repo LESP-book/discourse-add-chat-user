@@ -5,3 +5,6 @@ plugins:
   add_chat_user_supervisor_username:
     default: ""
     type: string
+  add_chat_user_restrict_dm_to_staff:
+    default: false
+    client: true
